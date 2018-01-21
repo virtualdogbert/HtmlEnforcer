@@ -36,37 +36,32 @@ class HtmlEnforcer {
         parseHtml(html)
     }
 
-    List parseHtml(String html, boolean returnFirstError = true, boolean throwException = true) {
+    List<String> parseHtml(String html, boolean returnFirstError = true, boolean throwException = true) {
         List<String> errors = []
         Document doc = Jsoup.parse(html)
         Elements elements = doc.body().select("*")
 
         for (Element element : elements) {
-            if (!(element.tagName() in config.allowedElements)) {
-                //println(element.tagName())
+            if (!(element.tagName() in (Set<String>)config.allowedElements)) {
 
                 if (throwException) {
                     throw new Exception("Element:${element.tagName()} is not allowed")
                 } else if (returnFirstError) {
-                    return ["Element:${element.tagName()} is not allowed"]
+                    return ["Element:${element.tagName()} is not allowed".toString()]
                 }
 
                 errors << "Element:${element.tagName()} is not allowed".toString()
             }
 
             for (Attribute attribute : element.attributes()) {
-                //println attribute.key
-                //println attribute.value
                 String value = attribute.value
 
-                if (!(attribute.key in config.allowedAttributes)) {
-                    //println attribute.key
-                    //println attribute.value
+                if (!(attribute.key in (Set<String>)config.allowedAttributes)) {
 
                     if (throwException) {
                         throw new Exception("Atribute: $attribute.key is not allowed for element: ${element.tagName()}")
                     } else if (returnFirstError) {
-                        return ["Atribute: $attribute.key is not allowed for element: ${element.tagName()}"]
+                        return ["Atribute: $attribute.key is not allowed for element: ${element.tagName()}".toString()]
                     }
 
                     errors << "Atribute: $attribute.key is not allowed for element: ${element.tagName()}".toString()
@@ -79,12 +74,12 @@ class HtmlEnforcer {
                     for (String style : styles) {
                         String[] styleValues = style.split(':')
 
-                        if (!(styleValues[0] in config.allowedCssProperties)) {
+                        if (!(styleValues[0] in (Set<String>)config.allowedCssProperties)) {
 
                             if (throwException) {
                                 throw new Exception("CSS Property: ${styleValues[0]} is not allowed.")
                             } else if (returnFirstError) {
-                                return ["CSS Property: ${styleValues[0]} is not allowed."]
+                                return ["CSS Property: ${styleValues[0]} is not allowed.".toString()]
                             }
 
                             errors << "CSS Property: ${styleValues[0]} is not allowed.".toString()
@@ -97,7 +92,7 @@ class HtmlEnforcer {
                             if (throwException) {
                                 throw new Exception("Value: ${styleValues[1]} is not allowed for CSS Property: ${styleValues[0]}")
                             } else if (returnFirstError) {
-                                return ["Value: ${styleValues[1]} is not allowed for CSS Property: ${styleValues[0]}"]
+                                return ["Value: ${styleValues[1]} is not allowed for CSS Property: ${styleValues[0]}".toString()]
                             }
 
                             errors << "Value: ${styleValues[1]} is not allowed for CSS Property: ${styleValues[0]}".toString()
@@ -111,7 +106,7 @@ class HtmlEnforcer {
                         if (throwException) {
                             throw new Exception("Atribute: $attribute.key with value $attribute.value is not allowed for element: ${element.tagName()}")
                         } else if (returnFirstError) {
-                            return ["Atribute: $attribute.key with value $attribute.value is not allowed for element: ${element.tagName()}"]
+                            return ["Atribute: $attribute.key with value $attribute.value is not allowed for element: ${element.tagName()}".toString()]
                         }
 
                         errors << "Atribute: $attribute.key with value $attribute.value is not allowed for element: ${element.tagName()}".toString()
@@ -122,7 +117,7 @@ class HtmlEnforcer {
                         if (throwException) {
                             throw new Exception("Atribute: $attribute.key with value $attribute.value is not allowed for element: ${element.tagName()}")
                         } else if (returnFirstError) {
-                            return ["Atribute: $attribute.key with value $attribute.value is not allowed for element: ${element.tagName()}"]
+                            return ["Atribute: $attribute.key with value $attribute.value is not allowed for element: ${element.tagName()}".toString()]
                         }
 
                         errors << "Atribute: $attribute.key with value $attribute.value is not allowed for element: ${element.tagName()}".toString()
