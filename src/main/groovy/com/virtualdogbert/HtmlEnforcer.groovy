@@ -32,6 +32,10 @@ class HtmlEnforcer {
         return (parseHtml(html, true, false).size() <= 0)
     }
 
+    List<String> validateHtmlErrors(String html) {
+        return parseHtml(html, false, false)
+    }
+
     void enforceHtml(String html) {
         parseHtml(html)
     }
