@@ -13,10 +13,19 @@ import java.util.regex.Pattern
 class HtmlEnforcer {
 
 
-    HtmlConfig config
+    ConfigObject config
 
-    HtmlEnforcer(HtmlConfig config) {
-        this.config = config
+    HtmlEnforcer(String fileName = null) {
+        File file
+        ConfigSlurper configSlurper = new ConfigSlurper()
+
+        if (fileName) {
+            file = new File(fileName)
+        } else {
+            file = new File(getClass().getResource("/config.groovy").toURI())
+        }
+
+        config = configSlurper.parse(file.toURL())
     }
 
     boolean validateHtml(String html) {
@@ -81,7 +90,7 @@ class HtmlEnforcer {
                             errors << "CSS Property: ${styleValues[0]} is not allowed.".toString()
                         }
 
-                        Pattern check = config.cssPropertyPatterns[styleValues[0].trim()]
+                        Pattern check = (Pattern) config.cssPropertyPatterns[styleValues[0].trim()]
 
                         if (!(styleValues[1].trim() ==~ check)) {
 
@@ -95,7 +104,7 @@ class HtmlEnforcer {
                         }
                     }
                 } else {
-                    Map check = config.attributePatterns[attribute.key]
+                    Map check = (Map) config.attributePatterns[attribute.key]
 
                     if (!check.global && !((List<String>) check.elements).contains(element.tagName())) {
 
@@ -128,9 +137,11 @@ class HtmlEnforcer {
     }
 
     public static void main(String[] args) {
-        HtmlEnforcer enforcer = new HtmlEnforcer(new HtmlConfig())
+
+        HtmlEnforcer enforcer = new HtmlEnforcer()
+        println enforcer.validateHtml("""<p id=5 style="color:black">test</p> <script>alert('powed');</script>""") // warm up
         Date d = new Date()
-        //println enforcer.validateHtml("""<p id=5 style="color:black">test</p> <script>alert('powed');</script>""")
+        println enforcer.validateHtml("""<p id=5 style="color:black">test</p> <script>alert('powed');</script>""")
         //println enforcer.validateHtml("<a></a><p class='classy' style='color: blue;width:5%'>An <b>example</b> link.</p><img width=\"100\"></img>")
         //println enforcer.validateHtml("<p style='color: blue;width:5000em'></p>")
         //println enforcer.validateHtml("<p style='width:5000em'></p>")
