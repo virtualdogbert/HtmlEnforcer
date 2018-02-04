@@ -26,6 +26,7 @@ class HtmlEnforcerSpec extends Specification {
 
     def setupSpec() {
         htmlEnforcer = new HtmlEnforcer()
+        htmlEnforcer.validateHtml('')
     }
 
     @Unroll

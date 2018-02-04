@@ -19,7 +19,7 @@
 import java.util.regex.Pattern
 
 //TODO figure out what I need to do validate text. This might be big enough to require its own groovy class.
-//TEXT = Pattern.compile()
+TEXT = Pattern.compile('')
 
 // The 16 colors defined by the HTML Spec (also used by the CSS Spec)
 COLOR_NAME = Pattern.compile(/(?i:aqua|black|blue|fuchsia|gray|grey|green|lime|maroon|navy|olive|purple|red|silver|teal|white|yellow)/)
