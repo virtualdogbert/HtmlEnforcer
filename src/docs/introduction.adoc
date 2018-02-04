@@ -1,0 +1,7 @@
+== Introduction
+
+HTML Enforcer is a Groovy library that enforces/validates HTML and inline CSS, based on a white list configurations in
+Groovy ConfigSlurper format. This library does contain a DefaultConfig.groovy, which is a work in progress, and is meant
+to give you the most flexible HTML possible, but still protect against XSS vulnerabilities.
+
+

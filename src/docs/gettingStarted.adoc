@@ -1,0 +1,7 @@
+== Getting Started
+
+1. Add the following dependency:
+.build.gradle
+----
+compile "org.virtualdogbert:htmlEnforcer:0.1"
+----
