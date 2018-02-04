@@ -12,6 +12,7 @@ This Library is a first attempt, at making an enforcer/validator for Html rather
  https://github.com/OWASP/java-html-sanitizer/blob/master/src/main/java/org/owasp/html/examples/EbayPolicyExample.java
 
 For now I'm still working on the default config, adding Regexes for whitelisting CSS.
+I also need to add checking for text, for encoding related XSS issues.
 
 
 For documentation see the github page:
