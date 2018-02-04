@@ -1,6 +1,25 @@
-package com.virtualdogbert
-
+/**
+ *  Licensed to the Apache Software Foundation (ASF) under one
+ *  or more contributor license agreements.  See the NOTICE file
+ *  distributed with this work for additional information
+ *  regarding copyright ownership.  The ASF licenses this file
+ *  to you under the Apache License, Version 2.0 (the
+ *  "License"); you may not use this file except in compliance
+ *  with the License.  You may obtain a copy of the License at
+ *
+ *    http://www.apache.org/licenses/LICENSE-2.0
+ *
+ *  Unless required by applicable law or agreed to in writing,
+ *  software distributed under the License is distributed on an
+ *  "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+ *  KIND, either express or implied.  See the License for the
+ *  specific language governing permissions and limitations
+ *  under the License.
+ */
 import java.util.regex.Pattern
+
+//TODO figure out what I need to do validate text. This might be big enough to require its own groovy class.
+//TEXT = Pattern.compile()
 
 // The 16 colors defined by the HTML Spec (also used by the CSS Spec)
 COLOR_NAME = Pattern.compile(/(?i:aqua|black|blue|fuchsia|gray|grey|green|lime|maroon|navy|olive|purple|red|silver|teal|white|yellow)/)
@@ -11,8 +30,6 @@ PARAGRAPH = Pattern.compile('(?:[\\p{L}\\p{N},\'\\.\\s\\-_\\(\\)]|&[0-9]{2};)*')
 HTML_ID = Pattern.compile('[a-zA-Z0-9\\:\\-_\\.]+')
 // force non-empty with a '+' at the end instead of '*'
 HTML_TITLE = Pattern.compile('[\\p{L}\\p{N}\\s\\-_\',:\\[\\]!\\./\\\\\\(\\)&]*')
-
-ALLOWED_CLASSES = Pattern.compile(/(?i:auto|initial)/)
 HTML_CLASS = Pattern.compile('[a-zA-Z0-9\\s,\\-_]+')
 
 ONSITE_URL = Pattern.compile('(?:[\\p{L}\\p{N}\\\\\\.\\#@\\$%\\+&;\\-_~,\\?=/!]+|\\#(\\w)+)')
@@ -36,7 +53,7 @@ LENGTH = Pattern.compile('[+-]?(?:(?:[0-9]+(?:\\.[0-9]*)?)|\\.[0-9]+)(em|ex|%|px
 CORD = Pattern.compile('[+-]?(?:(?:[0-9]+(?:\\.[0-9]*)?)|\\.[0-9]+)(em|ex|%|px|cm|mm|in|pt|pc)')
 AUTO_INITIAL_OR_LENGTH = Pattern.compile("${AUTO_INITIAL.pattern()}|${LENGTH.pattern()}")
 FIXED_OR_SCROLL = Pattern.compile(/(?i:fixed|scroll)/)
-CSS_URL = Pattern.compile("url\\((\"|\')${ONSITE_URL.pattern()}(\"|\')\\)|url\\((\"|\')${OFFSITE_URL.pattern()}(\"|\')\\)")
+BACKGROUND_URL = Pattern.compile("url\\((\"|\')${ONSITE_URL.pattern()}(\"|\')\\)|url\\((\"|\')${OFFSITE_URL.pattern()}(\"|\')\\)")
 ONE_CHAR = Pattern.compile('.?', Pattern.DOTALL)
 POSITION = Pattern.compile("${AUTO_INITIAL.pattern()}|${CORD.pattern()} ${CORD.pattern()}\$")
 POSITIONS = Pattern.compile(/(?i:center|top|bottom|top left|top center|top right|center left|center center|center right|center top|center bottom|bottom left|bottom center|bottom right|left top|left center|left bottom|right top|right center|right bottom)/)
@@ -100,7 +117,7 @@ cssPropertyPatterns = [
         'background'           : PATTERN,
         'background-attachment': FIXED_OR_SCROLL,
         'background-color'     : Pattern.compile("${INITIAL_INHERIRIT_TRANSPARENT.pattern()}|${COLOR_NAME_OR_COLOR_CODE.pattern()}"),
-        'background-image'     : CSS_URL,
+        'background-image'     : BACKGROUND_URL,
         'background-position'  : Pattern.compile("${POSITION.pattern()}|${POSITIONS.pattern()}"),
         'background-repeat'    : REPEAT,
         'border'               : PATTERN,
